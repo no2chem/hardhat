@@ -170,6 +170,16 @@ module.exports = {
         // to specify one; any string placeholder will work
         xdai: "api-key",
         sokol: "api-key",
+    },
+    // If hardhat doesn't know about the chain's explorer api you can add it here 
+    extendChainConfig: {
+      localhost: {
+          chainId: 31337,
+          urls: {
+            apiURL: "https://localhost/api",
+            browserURL: "https://localhost",
+          },
+      }
     }
   }
 };
