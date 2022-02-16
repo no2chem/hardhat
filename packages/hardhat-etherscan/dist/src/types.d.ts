@@ -1,23 +1,25 @@
-declare type Chain = "mainnet" | "ropsten" | "rinkeby" | "goerli" | "kovan" | "bsc" | "bscTestnet" | "heco" | "hecoTestnet" | "opera" | "ftmTestnet" | "optimisticEthereum" | "optimisticKovan" | "polygon" | "polygonMumbai" | "arbitrumOne" | "arbitrumTestnet" | "avalanche" | "avalancheFujiTestnet" | "moonbeam" | "moonriver" | "moonbaseAlpha" | "xdai" | "sokol";
-export declare type ChainConfig = {
-    [Network in Chain]: EtherscanChainConfig;
-};
-declare type EtherscanApiKeys = {
-    [Network in Chain]?: string;
-};
+export interface ChainConfig {
+    [chain: string]: EtherscanChainConfig;
+}
+interface EtherscanApiKeys {
+    [chain: string]: string;
+}
 export interface EtherscanConfig {
     apiKey?: string | EtherscanApiKeys;
+    extendChainConfig?: {
+        [chain: string]: EtherscanChainConfig;
+    };
 }
 export interface EtherscanURLs {
     apiURL: string;
     browserURL: string;
 }
-interface EtherscanChainConfig {
+export interface EtherscanChainConfig {
     chainId: number;
     urls: EtherscanURLs;
 }
 export interface EtherscanNetworkEntry {
-    network: Chain;
+    network: string;
     urls: EtherscanURLs;
 }
 export {};

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.chainConfig = void 0;
+exports.getChainConfig = void 0;
 // See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md#list-of-chain-ids
-exports.chainConfig = {
+const chainConfig = {
     mainnet: {
         chainId: 1,
         urls: {
@@ -172,4 +172,8 @@ exports.chainConfig = {
         },
     },
 };
+const getChainConfig = (config) => {
+    return Object.assign(Object.assign({}, chainConfig), config.extendChainConfig);
+};
+exports.getChainConfig = getChainConfig;
 //# sourceMappingURL=ChainConfig.js.map

@@ -9,7 +9,7 @@ async function getEtherscanEndpoints(provider, networkName, chainConfig) {
     }
     const chainIdsToNames = new Map(entries(chainConfig).map(([chainName, config]) => [
         config.chainId,
-        chainName,
+        chainName.toString(),
     ]));
     const chainID = parseInt(await provider.send("eth_chainId"), 16);
     const network = chainIdsToNames.get(chainID);

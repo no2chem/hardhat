@@ -53,5 +53,41 @@ describe("Config extension", () => {
             (0, config_1.etherscanConfigExtender)(resolvedConfig, invalidEtherscanConfig);
         }, 'Etherscan API token "newhotness" is for an unsupported network');
     });
+    it("should provide custom network", () => {
+        const resolvedConfig = {};
+        (0, config_1.etherscanConfigExtender)(resolvedConfig, {
+            etherscan: {
+                apiKey: { localhost: "example_token" },
+                extendChainConfig: {
+                    localhost: {
+                        chainId: 31337,
+                        urls: {
+                            apiURL: "https://localhost/api",
+                            browserURL: "https://localhost",
+                        },
+                    },
+                },
+            },
+        });
+    });
+    it("should not provide custom network without api key", () => {
+        chai_1.assert.throws(() => {
+            const resolvedConfig = {};
+            (0, config_1.etherscanConfigExtender)(resolvedConfig, {
+                etherscan: {
+                    apiKey: { wrong_network: "example_token" },
+                    extendChainConfig: {
+                        localhost: {
+                            chainId: 31337,
+                            urls: {
+                                apiURL: "https://localhost/api",
+                                browserURL: "https://localhost",
+                            },
+                        },
+                    },
+                },
+            });
+        });
+    });
 });
 //# sourceMappingURL=etherscanConfigExtender.js.map

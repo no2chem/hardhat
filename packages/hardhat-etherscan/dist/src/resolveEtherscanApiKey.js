@@ -4,8 +4,8 @@ exports.resolveEtherscanApiKey = void 0;
 const plugins_1 = require("hardhat/plugins");
 const constants_1 = require("./constants");
 const ChainConfig_1 = require("./ChainConfig");
-const isNetworkKey = (network) => {
-    return network in ChainConfig_1.chainConfig;
+const isNetworkKey = (network, config) => {
+    return network in (0, ChainConfig_1.getChainConfig)(config);
 };
 const resolveEtherscanApiKey = (etherscan, network) => {
     if (etherscan.apiKey === undefined || etherscan.apiKey === "") {
@@ -15,7 +15,7 @@ const resolveEtherscanApiKey = (etherscan, network) => {
         return etherscan.apiKey;
     }
     const apiKeys = etherscan.apiKey;
-    if (!isNetworkKey(network)) {
+    if (!isNetworkKey(network, etherscan)) {
         throw new plugins_1.NomicLabsHardhatPluginError(constants_1.pluginName, `Unrecognized network: ${network}`);
     }
     const key = apiKeys[network];

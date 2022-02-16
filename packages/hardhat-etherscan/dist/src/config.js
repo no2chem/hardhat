@@ -10,7 +10,7 @@ const verifyAllowedChains = (etherscanConfig) => {
         typeof etherscanConfig.apiKey !== "object") {
         return [];
     }
-    const allowed = Object.keys(ChainConfig_1.chainConfig);
+    const allowed = Object.keys((0, ChainConfig_1.getChainConfig)(etherscanConfig));
     const actual = Object.keys(etherscanConfig.apiKey);
     return actual.filter((chain) => !allowed.includes(chain));
 };

@@ -324,7 +324,7 @@ See https://etherscan.io/solcversions for more information.`);
     }
     return compilerVersions;
 });
-(0, config_1.subtask)(constants_1.TASK_VERIFY_GET_ETHERSCAN_ENDPOINT).setAction(async (_, { network }) => (0, prober_1.getEtherscanEndpoints)(network.provider, network.name, ChainConfig_1.chainConfig));
+(0, config_1.subtask)(constants_1.TASK_VERIFY_GET_ETHERSCAN_ENDPOINT).setAction(async (_, { network, config }) => (0, prober_1.getEtherscanEndpoints)(network.provider, network.name, (0, ChainConfig_1.getChainConfig)(config.etherscan)));
 (0, config_1.subtask)(constants_1.TASK_VERIFY_GET_CONTRACT_INFORMATION)
     .addParam("deployedBytecode", undefined, undefined, config_1.types.any)
     .addParam("matchingCompilerVersions", undefined, undefined, config_1.types.any)

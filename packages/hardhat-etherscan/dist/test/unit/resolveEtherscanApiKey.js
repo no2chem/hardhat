@@ -21,9 +21,7 @@ describe("Etherscan API Key resolution", () => {
             chai_1.assert.equal((0, resolveEtherscanApiKey_1.resolveEtherscanApiKey)(etherscanConfig, "rinkeby"), "rinkeby-testtoken");
         });
         it("should throw if api key is for unrecognized network", () => {
-            chai_1.assert.throws(() => (0, resolveEtherscanApiKey_1.resolveEtherscanApiKey)(
-            // @ts-expect-error
-            { apiKey: { newthing: "testtoken" } }, "newthing"));
+            chai_1.assert.throws(() => (0, resolveEtherscanApiKey_1.resolveEtherscanApiKey)({ apiKey: { newthing: "testtoken" } }, "newthing"));
         });
     });
     describe("provide no api key", () => {
@@ -35,15 +33,29 @@ describe("Etherscan API Key resolution", () => {
             chai_1.assert.throws(() => (0, resolveEtherscanApiKey_1.resolveEtherscanApiKey)({ apiKey: "" }, "rinkeby"), expectedBadApiKeyMessage);
         });
         it("should throw if network subkey is undefined", () => {
-            chai_1.assert.throws(() => (0, resolveEtherscanApiKey_1.resolveEtherscanApiKey)({ apiKey: { rinkeby: undefined } }, "rinkeby"), /Please provide an Etherscan API token via hardhat config./);
+            chai_1.assert.throws(() => 
+            // @ts-expect-error
+            (0, resolveEtherscanApiKey_1.resolveEtherscanApiKey)({ apiKey: { rinkeby: undefined } }, "rinkeby"), /Please provide an Etherscan API token via hardhat config./);
         });
         it("should throw if network subkey is empty string", () => {
             chai_1.assert.throws(() => (0, resolveEtherscanApiKey_1.resolveEtherscanApiKey)({ apiKey: { rinkeby: "" } }, "rinkeby"), /Please provide an Etherscan API token via hardhat config./);
         });
         it("should throw if network subkey is not a supported network", () => {
-            chai_1.assert.throws(
-            // @ts-expect-error
-            () => (0, resolveEtherscanApiKey_1.resolveEtherscanApiKey)({ apiKey: { boom: "" } }, "boom"), "Unrecognized network: boom");
+            chai_1.assert.throws(() => (0, resolveEtherscanApiKey_1.resolveEtherscanApiKey)({ apiKey: { boom: "" } }, "boom"), "Unrecognized network: boom");
+        });
+        it("should resolve custom network", () => {
+            chai_1.assert.equal((0, resolveEtherscanApiKey_1.resolveEtherscanApiKey)({
+                apiKey: { localhost: "testtoken" },
+                extendChainConfig: {
+                    localhost: {
+                        chainId: 31337,
+                        urls: {
+                            apiURL: "https://localhost/api",
+                            browserURL: "https://localhost",
+                        },
+                    },
+                },
+            }, "localhost"), "testtoken");
         });
     });
 });
